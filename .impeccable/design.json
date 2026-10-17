@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-15T05:28:40.000Z",
+  "title": "Design System: Digital Marketing with Sid",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Editorial Indigo",
+        "canonical": "#7657FF",
+        "tonalRamp": ["#1A1040", "#2E1D70", "#482FA5", "#6242EC", "#7657FF", "#9B82FF", "#C2B2FF", "#EAE5FF"]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Lavender Glow",
+        "canonical": "#B8A7FF",
+        "tonalRamp": ["#251C47", "#3D2E73", "#5C46A6", "#8266DB", "#B8A7FF", "#CE22FF", "#E5DCFF", "#F6F3FF"]
+      },
+      "highlight": {
+        "role": "tertiary",
+        "displayName": "Neon Citrus",
+        "canonical": "#D9FF70",
+        "tonalRamp": ["#2C3608", "#4A5B0F", "#738C1A", "#A3C729", "#D9FF70", "#E3FF8F", "#EEFFB5", "#F8FFE0"]
+      },
+      "dark": {
+        "role": "neutral",
+        "displayName": "Obsidian Void",
+        "canonical": "#111318",
+        "tonalRamp": ["#08090B", "#0D0E12", "#111318", "#1A1D24", "#262A35", "#3D4354", "#616A85", "#9EA6BC"]
+      },
+      "dark-surface": {
+        "role": "neutral",
+        "displayName": "Deep Slate Surface",
+        "canonical": "#181A20",
+        "tonalRamp": ["#0C0D10", "#121418", "#181A20", "#242730", "#333744", "#4B5164", "#6E7793", "#A8B0C9"]
+      },
+      "dark-border": {
+        "role": "neutral",
+        "displayName": "Hairline Dark Border",
+        "canonical": "#303139",
+        "tonalRamp": ["#16161A", "#23242A", "#303139", "#444651", "#5D606E", "#7C8093", "#A2A6BD", "#D0D3E3"]
+      },
+      "bg-base": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#F7F6F2",
+        "tonalRamp": ["#363531", "#615F59", "#949188", "#C7C4BB", "#EBEAE5", "#F7F6F2", "#FCFCFA", "#FFFFFF"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Pure White Surface",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["#333333", "#555555", "#777777", "#999999", "#BBBBBB", "#DDDDDD", "#EEEEEE", "#FFFFFF"]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Warm Cream Border",
+        "canonical": "#E5E4E0",
+        "tonalRamp": ["#2E2E2C", "#52514D", "#7C7A75", "#AAA7A0", "#D0CECB", "#E5E4E0", "#F2F1EF", "#FAFAFA"]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Carbon Black",
+        "canonical": "#17181C",
+        "tonalRamp": ["#0A0A0C", "#111215", "#17181C", "#25272D", "#393C46", "#555A68", "#7D8397", "#AEB4C7"]
+      },
+      "text-secondary": {
+        "role": "neutral",
+        "displayName": "Muted Graphite",
+        "canonical": "#686B73",
+        "tonalRamp": ["#1A1B1D", "#2E3033", "#45484D", "#5E6269", "#686B73", "#8A8D96", "#B2B4BC", "#DEDFE3"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display Heading",
+        "purpose": "Hero page anchors, primary value propositions, and flagship titles."
+      },
+      "headline": {
+        "displayName": "Section Headline",
+        "purpose": "Major section headings and modal dialog titles."
+      },
+      "title": {
+        "displayName": "Card Title",
+        "purpose": "Service card names, feature titles, and list headers."
+      },
+      "body": {
+        "displayName": "Body Text",
+        "purpose": "Standard narrative copy, explanations, and long-form content."
+      },
+      "label": {
+        "displayName": "Monospace Eyebrow",
+        "purpose": "Technical indicators, module tags, category pills, and status tags."
+      }
+    },
+    "shadows": [
+      {
+        "name": "primary-glow",
+        "value": "0 4px 16px rgba(118, 87, 255, 0.25)",
+        "purpose": "Radiant focus glow for Editorial Indigo interactive buttons and links."
+      },
+      {
+        "name": "lime-glow",
+        "value": "0 4px 16px rgba(217, 255, 112, 0.30)",
+        "purpose": "High-voltage glow for Neon Citrus action triggers."
+      },
+      {
+        "name": "card-lift",
+        "value": "0 12px 32px rgba(118, 87, 255, 0.08)",
+        "purpose": "Atmospheric rise on interactive card hover."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Default snappy easing for interactive transitions."
+      },
+      {
+        "name": "duration-fast",
+        "value": "200ms",
+        "purpose": "Micro-interaction duration for hover, focus, and button taps."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "2xl", "value": "1536px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action button in Editorial Indigo with pill silhouette and subtle shadow glow.",
+      "html": "<button class=\"ds-btn-primary\">GET IN TOUCH</button>",
+      "css": ".ds-btn-primary { background: #7657FF; color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; padding: 12px 24px; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 16px rgba(118, 87, 255, 0.25); display: inline-flex; align-items: center; justify-content: center; text-decoration: none; } .ds-btn-primary:hover { background: #6242EC; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(118, 87, 255, 0.35); } .ds-btn-primary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "High-Voltage Lime Button",
+      "kind": "button",
+      "refersTo": "button-lime",
+      "description": "High-impact conversion button in Neon Citrus reserved for primary conversions.",
+      "html": "<button class=\"ds-btn-lime\">EXPLORE WORK</button>",
+      "css": ".ds-btn-lime { background: #D9FF70; color: #111318; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.02em; padding: 12px 24px; border-radius: 9999px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; box-shadow: 0 4px 16px rgba(217, 255, 112, 0.3); display: inline-flex; align-items: center; justify-content: center; } .ds-btn-lime:hover { background: #C8F552; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(217, 255, 112, 0.45); } .ds-btn-lime:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Dark Inverted Button",
+      "kind": "button",
+      "refersTo": "button-dark",
+      "description": "Architectural obsidian button with hairline stroke for secondary dark-mode actions.",
+      "html": "<button class=\"ds-btn-dark\">VIEW DETAILS</button>",
+      "css": ".ds-btn-dark { background: #111318; color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: 0.02em; padding: 12px 24px; border-radius: 9999px; border: 1px solid #303139; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease; display: inline-flex; align-items: center; justify-content: center; } .ds-btn-dark:hover { background: #1F2128; border-color: #7657FF; }"
+    },
+    {
+      "name": "Public Service Card",
+      "kind": "card",
+      "refersTo": "card-default",
+      "description": "Responsive card displaying service name, module eyebrow badge, and interactive hover lift.",
+      "html": "<div class=\"ds-card-default\"><span class=\"ds-badge-eyebrow\">MODULE 01</span><h3 class=\"ds-card-title\">Website Development</h3><p class=\"ds-card-desc\">High-performance, conversion-engineered digital platforms with sub-second speeds.</p></div>",
+      "css": ".ds-card-default { background: #FFFFFF; border: 1px solid #E5E4E0; border-radius: 24px; padding: 28px; transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; box-shadow: 0 1px 3px rgba(0,0,0,0.04); } .ds-card-default:hover { border-color: rgba(118, 87, 255, 0.4); box-shadow: 0 12px 32px rgba(118, 87, 255, 0.08); transform: translateY(-2px); } .ds-badge-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #7657FF; display: block; margin-bottom: 12px; } .ds-card-title { font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; color: #17181C; margin: 0 0 8px 0; } .ds-card-desc { font-family: 'Manrope', sans-serif; font-size: 14px; line-height: 1.6; color: #686B73; margin: 0; }"
+    },
+    {
+      "name": "Admin Slate Card",
+      "kind": "card",
+      "refersTo": "card-dark",
+      "description": "Dark container surface for management rows, configuration panels, and stats.",
+      "html": "<div class=\"ds-card-dark\"><div class=\"ds-admin-header\"><span class=\"ds-status-pill\">PUBLISHED</span><span class=\"ds-module-tag\">SEO</span></div><h4 class=\"ds-admin-title\">Search Engine Optimization</h4></div>",
+      "css": ".ds-card-dark { background: #181A20; border: 1px solid #303139; border-radius: 16px; padding: 20px; color: #FFFFFF; } .ds-admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; } .ds-status-pill { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; color: #10B981; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); padding: 4px 8px; border-radius: 9999px; } .ds-module-tag { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #8E9199; } .ds-admin-title { font-family: 'Space Grotesk', sans-serif; font-size: 16px; font-weight: 600; color: #FFFFFF; margin: 0; }"
+    },
+    {
+      "name": "Dark Input Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "High-contrast admin text input with hairline border and focused Indigo ring.",
+      "html": "<div class=\"ds-field-wrap\"><label class=\"ds-field-label\">SERVICE NAME *</label><input type=\"text\" class=\"ds-input-dark\" placeholder=\"e.g. Website Development\" /></div>",
+      "css": ".ds-field-wrap { width: 100%; display: flex; flex-direction: column; gap: 6px; } .ds-field-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #9EA6BC; } .ds-input-dark { background: #1F2128; border: 1px solid #303139; border-radius: 12px; padding: 12px 16px; color: #FFFFFF; font-family: 'Manrope', sans-serif; font-size: 14px; outline: none; transition: border-color 0.2s ease, box-shadow 0.2s ease; } .ds-input-dark:focus { border-color: #7657FF; box-shadow: 0 0 0 1px #7657FF; } .ds-input-dark::placeholder { color: #686B73; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Kinetic Digital Lab",
+    "overview": "The Kinetic Digital Lab is an engineered design environment calibrated for high-growth commercial impact. The visual language marries the tactile authority of an editorial broadsheet with the surgical responsiveness of a modern digital operations console. Clean architectural structures balance two distinct canvases: an obsidian dark void (#111318) alongside a warm cream background (#F7F6F2).\n\nThe atmosphere is sophisticated, calculated, and architectural. Rather than relying on generic corporate stock visuals or trendy gradient blobs, the system projects quiet authority through tight typographic geometry, micro-spaced monospace metadata badges, and high-frequency electric accents (#7657FF Editorial Indigo and #D9FF70 Neon Citrus).",
+    "keyCharacteristics": [
+      "Calculated Dual Canvas: High-contrast interplay between obsidian dark modules and warm tactile paper foundations.",
+      "Architectural Typography: Expressive geometric display headings paired with high-legibility sans body and industrial monospace indicators.",
+      "Sculpted Tonal Layering: Interfaces remain flat and calm at rest, igniting diffuse radiant ambient glows strictly upon interaction.",
+      "Engineering Rigor: Hairline precision dividers, sub-second responsive physics, and zero decorative noise."
+    ],
+    "rules": [
+      {
+        "name": "The Dual-Canvas Rule",
+        "body": "Dark obsidian surfaces (#111318) and warm paper surfaces (#F7F6F2) may co-exist across the page flow, but individual components must strictly adhere to their native container's tonal contract.",
+        "section": "colors"
+      },
+      {
+        "name": "The 10% High-Voltage Rule",
+        "body": "Neon Citrus (#D9FF70) is a precision surgical instrument, never a wallpaper. It must occupy no more than 10% of any given viewport, strictly reserved for key conversion buttons, high-impact statistics, or live status pills.",
+        "section": "colors"
+      },
+      {
+        "name": "The Monospace Eyebrow Rule",
+        "body": "Every major section title and feature block must be introduced by an uppercase IBM Plex Mono eyebrow tag (e.g. // 01 / SERVICES, // ADMIN / CONSOLE).",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-At-Rest Rule",
+        "body": "Surfaces and cards are completely flat at rest, bounded purely by 1px hairline borders. Elevation manifests solely as a reactive state (hover, focus, or modal overlay).",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do wrap all section headings with an uppercase monospace eyebrow tag (IBM Plex Mono).",
+      "Do enforce border-radius: 9999px (pill) on all interactive buttons and chip toggles.",
+      "Do preserve 1px hairline borders (#303139 or #E5E4E0) around cards and container boundaries.",
+      "Do limit Neon Citrus (#D9FF70) to high-priority conversion signals and stat callouts.",
+      "Do ensure all interactive elements display visible focus outlines (2px solid #7657FF, outline-offset: 3px)."
+    ],
+    "donts": [
+      "Don't use generic unbranded blue (#0000FF) or plain red/green without system-aligned hex values.",
+      "Don't add heavy drop-shadows to resting cards; maintain flat-at-rest discipline.",
+      "Don't use pastel blob illustrations or stock SaaS vector art.",
+      "Don't mix low-contrast gray text on dark backgrounds; maintain minimum WCAG AA contrast (4.5:1).",
+      "Don't alter button border thickness on focus (prevents layout reflow)."
+    ]
+  }
+}

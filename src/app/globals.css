@@ -1,0 +1,165 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #F7F6F2;
+  --color-surface: #FFFFFF;
+  --color-dark: #111318;
+  --color-dark-surface: #181A20;
+  --color-text-primary: #17181C;
+  --color-text-secondary: #686B73;
+  --color-text-muted: #8E9199;
+  --color-primary-accent: #7657FF;
+  --color-secondary-accent: #B8A7FF;
+  --color-highlight: #D9FF70;
+  --color-border: #E5E4E0;
+  --color-dark-border: #303139;
+
+  --font-display: var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: var(--font-manrope), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+@layer base {
+  :root {
+    --bg-base: #F7F6F2;
+    --surface: #FFFFFF;
+    --dark-surface: #111318;
+    --text-primary: #17181C;
+    --text-secondary: #686B73;
+    --accent: #7657FF;
+    --accent-secondary: #B8A7FF;
+    --highlight: #D9FF70;
+    --border-color: #E5E4E0;
+    --dark-border: #303139;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    overflow-x: hidden;
+    min-height: 100vh;
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+  }
+
+  ::selection {
+    background-color: #7657FF;
+    color: #FFFFFF;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #7657FF;
+    outline-offset: 3px;
+  }
+}
+
+/* Custom Typography & Layout Utilities specified in requirements */
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-body {
+  font-family: var(--font-body);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.container-x {
+  width: 100%;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 4vw, 2.5rem);
+  padding-right: clamp(1rem, 4vw, 2.5rem);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #7657FF;
+}
+
+.section-heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  color: #17181C;
+}
+
+.section-description {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.5vw, 1.1875rem);
+  line-height: 1.65;
+  color: #686B73;
+  max-width: 44rem;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #17181C 0%, #7657FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-accent {
+  background: linear-gradient(135deg, #7657FF 0%, #B8A7FF 60%, #D9FF70 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Smooth Infinite Marquee */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  animation: marquee 35s linear infinite;
+  will-change: transform;
+}
+
+.marquee-group:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* Intentional reduced motion: disable disorienting transforms and motion while preserving feedback */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+
+  /* Retain gentle state transitions (color, background, border, opacity) for clear interactive feedback */
+  a, button, input, textarea, select, [role="button"], [role="dialog"] {
+    transition-duration: 150ms !important;
+    transition-property: color, background-color, border-color, opacity, box-shadow !important;
+  }
+}

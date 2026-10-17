@@ -1,0 +1,62 @@
+[
+  {
+    "id": "478ee324-ce02-4475-935a-c28ad5d29fc4",
+    "serviceName": "Website Development",
+    "moduleName": "Web Solutions",
+    "imageUrl": "https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1200&auto=format&fit=crop",
+    "imagePublicId": null,
+    "isPublished": true,
+    "sortOrder": 1,
+    "createdAt": "2026-10-15T04:41:31.428Z",
+    "updatedAt": "2026-10-15T04:41:31.428Z",
+    "deletedAt": null
+  },
+  {
+    "id": "53e23f49-42c9-4d52-a955-828eb6c73e58",
+    "serviceName": "Performance Marketing",
+    "moduleName": "Digital Marketing",
+    "imageUrl": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1200&auto=format&fit=crop",
+    "imagePublicId": null,
+    "isPublished": true,
+    "sortOrder": 2,
+    "createdAt": "2026-10-15T04:41:31.428Z",
+    "updatedAt": "2026-10-15T04:41:31.428Z",
+    "deletedAt": null
+  },
+  {
+    "id": "975ffb2b-f0ba-4a67-b286-81eacccf0abd",
+    "serviceName": "Social Media Marketing",
+    "moduleName": "Growth & Distribution",
+    "imageUrl": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=1200&auto=format&fit=crop",
+    "imagePublicId": null,
+    "isPublished": true,
+    "sortOrder": 3,
+    "createdAt": "2026-10-15T04:41:31.428Z",
+    "updatedAt": "2026-10-15T04:41:31.428Z",
+    "deletedAt": null
+  },
+  {
+    "id": "ebf8080e-7cf5-4a5f-8337-8b0b8ed5dfcb",
+    "serviceName": "Search Engine Optimization",
+    "moduleName": "Organic Search",
+    "imageUrl": "https://images.unsplash.com/photo-1571786256017-aee7a0c009b6?q=80&w=1200&auto=format&fit=crop",
+    "imagePublicId": null,
+    "isPublished": true,
+    "sortOrder": 4,
+    "createdAt": "2026-10-15T04:41:31.428Z",
+    "updatedAt": "2026-10-15T04:41:31.428Z",
+    "deletedAt": null
+  },
+  {
+    "id": "f8534efc-50e9-4bd6-8a6b-ea80730a0d4b",
+    "serviceName": "Graphic Design & Branding",
+    "moduleName": "Brand Identity",
+    "imageUrl": "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=1200&auto=format&fit=crop",
+    "imagePublicId": null,
+    "isPublished": true,
+    "sortOrder": 5,
+    "createdAt": "2026-10-15T04:41:31.428Z",
+    "updatedAt": "2026-10-15T04:41:31.428Z",
+    "deletedAt": null
+  }
+]
