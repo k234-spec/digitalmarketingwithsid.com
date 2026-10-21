@@ -60,7 +60,7 @@ export const Footer: React.FC = () => {
             <p className="text-sm text-[#686B73] max-w-sm leading-relaxed">
               {brand.description}
             </p>
-            <div className="pt-2 text-xs font-mono text-[#686B73] space-y-1">
+            <div className="pt-2 text-xs font-mono text-[#686B73] space-y-1.5">
               <p>📍 {brand.location}</p>
               <p>🕒 {brand.operatingHours}</p>
               <p className="flex items-center gap-1.5">
@@ -71,6 +71,32 @@ export const Footer: React.FC = () => {
                   aria-label={`Send email to ${brand.email}`}
                 >
                   {brand.email}
+                </a>
+              </p>
+              <p className="flex items-center gap-1.5">
+                <span aria-hidden="true">📞</span>
+                <span className="text-[#17181C] font-semibold">Primary:</span>
+                <a
+                  href={`https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent("Hi Sid, I would like to discuss digital growth and marketing services.")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#7657FF] transition-colors underline-offset-2 hover:underline"
+                  aria-label={`Chat with primary desk on WhatsApp at ${brand.phone}`}
+                >
+                  {brand.phone}
+                </a>
+              </p>
+              <p className="flex items-center gap-1.5">
+                <span aria-hidden="true">💬</span>
+                <span className="text-[#17181C] font-semibold">Alternate (WhatsApp):</span>
+                <a
+                  href={`https://wa.me/${brand.alternateWhatsappNumber}?text=${encodeURIComponent("Hi Sid, reaching out on the alternate WhatsApp desk.")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#16a34a] font-semibold hover:text-[#15803d] transition-colors underline-offset-2 hover:underline"
+                  aria-label={`Chat with alternate desk for existing & new users on WhatsApp at ${brand.alternatePhone}`}
+                >
+                  {brand.alternatePhone}
                 </a>
               </p>
             </div>

@@ -6,7 +6,7 @@ export const ADMIN_COOKIE_NAME = "admin_session";
 const SESSION_MAX_AGE_SECONDS = 7 * 24 * 60 * 60; // 7 days
 
 const ADMIN_EMAIL =
-  process.env.ADMIN_EMAIL || "admin@digitalmarketingwithsid.com";
+  process.env.ADMIN_EMAIL || "info@digitalmarketingwithsid.com";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin12345";
 const SECRET_KEY =
   process.env.ADMIN_SESSION_SECRET ||
@@ -17,8 +17,14 @@ export function checkAdminCredentials(
   password?: string | null
 ): boolean {
   if (!email || !password) return false;
+  const normalized = email.trim().toLowerCase();
+  const validEmails = [
+    ADMIN_EMAIL.toLowerCase(),
+    "info@digitalmarketingwithsid.com",
+    "admin@digitalmarketingwithsid.com",
+  ];
   return (
-    email.trim().toLowerCase() === ADMIN_EMAIL.toLowerCase() &&
+    validEmails.includes(normalized) &&
     password === ADMIN_PASSWORD
   );
 }

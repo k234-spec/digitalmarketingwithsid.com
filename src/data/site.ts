@@ -7,6 +7,8 @@ export interface BrandConfig {
   email: string;
   phone: string;
   whatsappNumber: string;
+  alternatePhone: string;
+  alternateWhatsappNumber: string;
   location: string;
   markets: string[];
   operatingHours: string;
@@ -23,7 +25,9 @@ export const brand: BrandConfig = {
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@digitalmarketingwithsid.com",
   phone: "+91 84478 86310",
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "918447886310",
-  location: "Bengaluru & Mumbai, India (Global Delivery)",
+  alternatePhone: "+91 78271 69606",
+  alternateWhatsappNumber: process.env.NEXT_PUBLIC_ALT_WHATSAPP_NUMBER || "917827169606",
+  location: "Remote Location",
   markets: ["India", "United States", "United Kingdom", "UAE", "Singapore"],
   operatingHours: "Monday – Friday: 9:30 AM – 6:30 PM IST",
   closingStatement: "STRATEGY WITH PURPOSE. CREATIVE WITH INTENT. GROWTH WITH MEASUREMENT.",

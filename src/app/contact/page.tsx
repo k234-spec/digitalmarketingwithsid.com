@@ -63,13 +63,36 @@ export default function ContactPage() {
                     <Phone className="h-4 w-4" />
                   </div>
                   <span className="font-mono text-[10px] uppercase text-[#686B73] font-semibold block">
-                    Direct Line
+                    Primary Desk (Inquiries)
                   </span>
                   <a
-                    href={`tel:${brand.phone.replace(/[^\d+]/g, "")}`}
+                    href={`https://wa.me/${brand.whatsappNumber}?text=${encodeURIComponent("Hi Sid, I would like to discuss digital growth and marketing services.")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-xs font-mono font-medium text-[#17181C] hover:text-[#7657FF] transition-colors"
                   >
                     {brand.phone}
+                  </a>
+                </div>
+
+                <div className="rounded-2xl bg-[#111318] border border-[#25D366]/40 p-5 space-y-2 text-white relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-[#25D366]/15 rounded-full blur-xl pointer-events-none" />
+                  <div className="w-8 h-8 rounded-lg bg-[#25D366]/20 flex items-center justify-center text-[#25D366]">
+                    <MessageSquare className="h-4 w-4" />
+                  </div>
+                  <span className="font-mono text-[10px] uppercase text-[#25D366] font-semibold block">
+                    Alternate Line · Existing & New Users
+                  </span>
+                  <a
+                    href={`https://wa.me/${brand.alternateWhatsappNumber}?text=${encodeURIComponent("Hi Sid, I am an existing/new user reaching out on the alternate WhatsApp line.")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-mono font-bold text-white hover:text-[#25D366] transition-colors flex items-center gap-1.5"
+                  >
+                    <span>{brand.alternatePhone}</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#25D366]/20 text-[#25D366] font-mono">
+                      WhatsApp
+                    </span>
                   </a>
                 </div>
 
@@ -82,18 +105,6 @@ export default function ContactPage() {
                   </span>
                   <p className="text-xs font-mono font-medium text-[#17181C]">
                     {brand.operatingHours}
-                  </p>
-                </div>
-
-                <div className="rounded-2xl bg-white border border-[#E5E4E0] p-5 space-y-2">
-                  <div className="w-8 h-8 rounded-lg bg-[#7657FF]/10 flex items-center justify-center text-[#7657FF]">
-                    <MapPin className="h-4 w-4" />
-                  </div>
-                  <span className="font-mono text-[10px] uppercase text-[#686B73] font-semibold block">
-                    Headquarters
-                  </span>
-                  <p className="text-xs font-mono font-medium text-[#17181C]">
-                    {brand.location}
                   </p>
                 </div>
               </div>

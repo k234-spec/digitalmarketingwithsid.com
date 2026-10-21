@@ -13,7 +13,7 @@ export default function AdminLoginPage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleFillDemo = () => {
-    setEmail("admin@digitalmarketingwithsid.com");
+    setEmail("info@digitalmarketingwithsid.com");
     setPassword("admin12345");
   };
 
@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@digitalmarketingwithsid.com"
+                  placeholder="info@digitalmarketingwithsid.com"
                   className="w-full pl-10 pr-4 py-3 bg-[#1A1C26] border border-[#303342] rounded-xl text-white text-sm focus:outline-none focus:border-[#7657FF] transition-colors"
                 />
               </div>
@@ -143,7 +143,7 @@ export default function AdminLoginPage() {
               </button>
             </div>
             <p className="text-xs font-mono text-gray-500 mt-1">
-              admin@digitalmarketingwithsid.com / admin12345
+              info@digitalmarketingwithsid.com / admin12345
             </p>
           </div>
         </div>

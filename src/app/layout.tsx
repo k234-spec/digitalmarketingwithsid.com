@@ -1,22 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Manrope, IBM_Plex_Mono } from "next/font/google";
+import { Inter, IBM_Plex_Mono } from "next/font/google";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import { constructMetadata, generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo";
+import { AuthProvider } from "@/components/auth/AuthContext";
+import { AuthModal } from "@/components/auth/AuthModal";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
-  display: "swap",
-  weight: ["500", "600", "700"],
-});
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  variable: "--font-manrope",
+  variable: "--font-sans",
   display: "swap",
   weight: ["400", "500", "600", "700"],
 });
@@ -28,7 +23,14 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
-export const metadata: Metadata = constructMetadata();
+export const metadata: Metadata =
+  typeof constructMetadata === "function"
+    ? constructMetadata()
+    : {
+        title: "Digital Marketing with Sid — Turn Your Digital Presence Into Business Growth.",
+        description:
+          "We build high-performing websites, compelling brands, and data-driven marketing systems.",
+      };
 
 export const viewport: Viewport = {
   themeColor: "#111318",
@@ -47,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${manrope.variable} ${ibmPlexMono.variable}`}
+      className={`${inter.variable} ${ibmPlexMono.variable}`}
     >
       <head>
         <script
@@ -60,12 +62,15 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased selection:bg-[#7657FF] selection:text-white flex flex-col min-h-screen">
-        <MotionProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <WhatsAppButton />
-        </MotionProvider>
+        <AuthProvider>
+          <MotionProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <WhatsAppButton />
+            <AuthModal />
+          </MotionProvider>
+        </AuthProvider>
       </body>
     </html>
   );
