@@ -55,7 +55,7 @@ cp .env.example .env.local
 NEXT_PUBLIC_SITE_URL=https://digitalmarketingwithsid.com
 
 # Agency notification email for contact inquiries
-CONTACT_EMAIL=Siddhantshukla108@gmail.com
+CONTACT_EMAIL=info@digitalmarketingwithsid.com
 
 # Optional Email Provider API Key (e.g., Resend api key starting with re_)
 # When left empty, inquiries will be logged server-side in mock development mode

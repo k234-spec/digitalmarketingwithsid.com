@@ -63,7 +63,16 @@ export const Footer: React.FC = () => {
             <div className="pt-2 text-xs font-mono text-[#686B73] space-y-1">
               <p>📍 {brand.location}</p>
               <p>🕒 {brand.operatingHours}</p>
-              <p>✉️ {brand.email}</p>
+              <p className="flex items-center gap-1.5">
+                <span aria-hidden="true">✉️</span>
+                <a
+                  href={`mailto:${brand.email}`}
+                  className="hover:text-[#7657FF] transition-colors underline-offset-2 hover:underline focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#7657FF] rounded-sm"
+                  aria-label={`Send email to ${brand.email}`}
+                >
+                  {brand.email}
+                </a>
+              </p>
             </div>
           </div>
 
@@ -137,6 +146,7 @@ export const Footer: React.FC = () => {
                 <input
                   type="email"
                   required
+                  aria-label="Email address for growth intelligence newsletter"
                   placeholder="name@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}

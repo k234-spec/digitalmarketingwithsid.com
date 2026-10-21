@@ -18,7 +18,7 @@ export async function sendInquiryNotification(
   const toEmail =
     process.env.CONTACT_EMAIL ||
     process.env.NEXT_PUBLIC_CONTACT_EMAIL ||
-    "Siddhantshukla108@gmail.com";
+    "info@digitalmarketingwithsid.com";
 
   // In production with API key configured:
   if (apiKey && apiKey.startsWith("re_")) {

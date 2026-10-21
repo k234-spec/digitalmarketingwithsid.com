@@ -73,7 +73,7 @@ export const faqsData: FAQItem[] = [
     id: "faq-10",
     question: "How can we book an initial consultation?",
     answer:
-      "You can book an initial consultation by completing our online inquiry form on the contact page or clicking 'Get a Free Consultation'. Alternatively, reach out directly via our verified WhatsApp channel or email us at Siddhantshukla108@gmail.com. We review every submission within 24 business hours.",
+      "You can book an initial consultation by completing our online inquiry form on the contact page or clicking 'Get a Free Consultation'. Alternatively, reach out directly via our verified WhatsApp channel or email us at info@digitalmarketingwithsid.com. We review every submission within 24 business hours.",
     category: "General",
   },
 ];

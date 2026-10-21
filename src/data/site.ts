@@ -20,7 +20,7 @@ export const brand: BrandConfig = {
   description:
     "We build high-performing websites, compelling brands, and data-driven marketing systems that help ambitious businesses attract the right audience and convert attention into revenue.",
   websiteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://digitalmarketingwithsid.com",
-  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "Siddhantshukla108@gmail.com",
+  email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@digitalmarketingwithsid.com",
   phone: "+91 84478 86310",
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "918447886310",
   location: "Bengaluru & Mumbai, India (Global Delivery)",
