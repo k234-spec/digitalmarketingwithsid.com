@@ -3,7 +3,7 @@
 import React from "react";
 import { useUserAuth } from "@/components/auth/AuthContext";
 import { isPublicService, COMPANY_NOREPLY_EMAIL } from "@/lib/auth/user-constants";
-import { Lock, Sparkles, ArrowRight, ShieldCheck, Phone, CheckCircle2 } from "lucide-react";
+import { Lock, Sparkles, ArrowRight, ShieldCheck, CheckCircle2 } from "lucide-react";
 import { Container } from "@/ui/Container";
 
 interface ServiceAccessGateProps {
@@ -55,23 +55,13 @@ export const ServiceAccessGate: React.FC<ServiceAccessGateProps> = ({
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => openLoginModal("phone")}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-[#7657FF] hover:bg-[#6242EC] text-white font-mono text-xs uppercase tracking-wider font-bold transition-all shadow-[0_4px_20px_rgba(118,87,255,0.4)] flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <Phone className="h-3.5 w-3.5" />
-                <span>Log In with Mobile Number</span>
-                <ArrowRight className="h-4 w-4" />
-              </button>
-
+            <div className="flex items-center justify-center pt-2">
               <button
                 type="button"
                 onClick={() => openLoginModal("google")}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white hover:bg-gray-100 text-[#17181C] font-mono text-xs uppercase tracking-wider font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white hover:bg-gray-100 text-[#17181C] font-mono text-xs uppercase tracking-wider font-bold transition-all shadow-md flex items-center justify-center gap-2.5 cursor-pointer hover:shadow-lg"
               >
-                <svg className="h-4 w-4" viewBox="0 0 24 24">
+                <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24">
                   <path
                     fill="#4285F4"
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"

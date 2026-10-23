@@ -51,7 +51,7 @@ export const ServiceListItem: React.FC<ServiceListItemProps> = ({
 
   const handleLockedClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    openLoginModal("phone");
+    openLoginModal("google");
   };
 
   return (

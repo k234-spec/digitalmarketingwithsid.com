@@ -32,7 +32,7 @@ export function ServiceCard({ service, className = "" }: ServiceCardProps) {
 
   const handleLockedClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    openLoginModal("phone");
+    openLoginModal("google");
   };
 
   return (
