@@ -16,10 +16,14 @@ export async function POST(request: NextRequest) {
     const body = await request.json().catch(() => ({}));
     const { email, code, name } = body;
 
-    const userEmail =
-      email && typeof email === "string" && email.includes("@")
-        ? email.toLowerCase().trim()
-        : "client@gmail.com";
+    if (!email || typeof email !== "string" || !email.includes("@")) {
+      return NextResponse.json(
+        { error: "A valid Google account email is required." },
+        { status: 400 }
+      );
+    }
+
+    const userEmail = email.toLowerCase().trim();
 
     const userName =
       name && typeof name === "string"

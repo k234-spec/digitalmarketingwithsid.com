@@ -55,7 +55,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState<boolean>(false);
-  const [activeAuthTab, setActiveAuthTab] = useState<"phone" | "google" | "email">("phone");
+  const [activeAuthTab, setActiveAuthTab] = useState<"phone" | "google" | "email">("google");
 
   // Fetch active session from HTTP-only cookie on mount
   const refreshUser = useCallback(async () => {
