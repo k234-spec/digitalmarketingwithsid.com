@@ -21,13 +21,19 @@ interface AuthContextType {
   sendOtpCode: (
     target: string,
     type: "phone" | "email",
-    name?: string
-  ) => Promise<{ success: boolean; message: string; devOtp?: string; error?: string }>;
+    name?: string,
+    purpose?: string
+  ) => Promise<{
+    success: boolean;
+    message: string;
+    cooldownRemaining?: number;
+    error?: string;
+  }>;
   verifyOtpCode: (
     target: string,
     code: string,
     name?: string
-  ) => Promise<{ success: boolean; error?: string }>;
+  ) => Promise<{ success: boolean; error?: string; attemptsRemaining?: number }>;
   signInWithGoogle: (
     email?: string,
     code?: string,
@@ -36,7 +42,7 @@ interface AuthContextType {
     success: boolean;
     otpRequired?: boolean;
     message?: string;
-    devOtp?: string;
+    cooldownRemaining?: number;
     error?: string;
   }>;
   logout: () => Promise<void>;
@@ -89,28 +95,33 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const sendOtpCode = async (
     target: string,
     type: "phone" | "email",
-    name?: string
+    name?: string,
+    purpose?: string
   ) => {
     try {
       const res = await fetch("/api/auth/send-otp", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ target, type, name }),
+        body: JSON.stringify({ target, type, name, purpose }),
       });
       const data = await res.json();
       if (!res.ok) {
-        return { success: false, message: "", error: data.error || "Failed to send code" };
+        return {
+          success: false,
+          message: "",
+          cooldownRemaining: data.cooldownRemaining,
+          error: data.error || "Unable to send the verification code. Please try again.",
+        };
       }
       return {
         success: true,
-        message: data.message,
-        devOtp: data.devOtp,
+        message: data.message || "Verification code requested. Please check your email.",
       };
     } catch (err) {
       return {
         success: false,
         message: "",
-        error: err instanceof Error ? err.message : "Network error dispatching OTP",
+        error: "Unable to send the verification code. Please try again.",
       };
     }
   };
@@ -128,7 +139,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       });
       const data = await res.json();
       if (!res.ok) {
-        return { success: false, error: data.error || "Verification failed" };
+        return {
+          success: false,
+          error: data.error || "Verification failed",
+          attemptsRemaining: data.attemptsRemaining,
+        };
       }
       setUser(data.user);
       setIsAuthModalOpen(false);
@@ -154,14 +169,17 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       });
       const data = await res.json();
       if (!res.ok) {
-        return { success: false, error: data.error || "Google sign-in failed" };
+        return {
+          success: false,
+          cooldownRemaining: data.cooldownRemaining,
+          error: data.error || "Unable to send the verification code. Please try again.",
+        };
       }
       if (data.otpRequired) {
         return {
           success: true,
           otpRequired: true,
-          message: data.message,
-          devOtp: data.devOtp,
+          message: data.message || "Verification code requested. Please check your email.",
         };
       }
       setUser(data.user);

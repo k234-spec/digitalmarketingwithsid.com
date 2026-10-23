@@ -23,7 +23,10 @@ export async function POST(request: NextRequest) {
 
     if (!verification.success || !verification.user) {
       return NextResponse.json(
-        { error: verification.error || "Verification failed." },
+        {
+          error: verification.error || "Verification failed.",
+          attemptsRemaining: verification.attemptsRemaining,
+        },
         { status: 401 }
       );
     }

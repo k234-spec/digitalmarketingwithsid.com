@@ -28,13 +28,28 @@ export async function POST(request: NextRequest) {
 
     // Step 1: If no OTP code was supplied, generate and dispatch OTP to user's Google email
     if (!code || typeof code !== "string" || !code.trim()) {
-      const sendResult = sendOtp(userEmail, "email", userName);
+      const sendResult = await sendOtp(
+        userEmail,
+        "email",
+        userName,
+        "Google Account Verification"
+      );
+
+      if (!sendResult.success) {
+        return NextResponse.json(
+          {
+            error: sendResult.error || "Unable to send the verification code. Please try again.",
+            cooldownRemaining: sendResult.cooldownRemaining,
+          },
+          { status: sendResult.cooldownRemaining ? 429 : 400 }
+        );
+      }
+
       return NextResponse.json(
         {
           success: true,
           otpRequired: true,
-          message: `A one-time verification code has been dispatched from ${COMPANY_NOREPLY_EMAIL} to ${userEmail}. Please enter the OTP to log in.`,
-          devOtp: sendResult.devOtp,
+          message: "Verification code requested. Please check your email.",
         },
         { status: 200 }
       );

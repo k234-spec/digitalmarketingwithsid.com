@@ -17,6 +17,9 @@ import {
   Loader2,
   Smartphone,
   MessageCircle,
+  KeyRound,
+  UserPlus,
+  LogIn,
 } from "lucide-react";
 
 export const AuthModal: React.FC = () => {
@@ -29,7 +32,8 @@ export const AuthModal: React.FC = () => {
     signInWithGoogle,
   } = useUserAuth();
 
-  const [tab, setTab] = useState<"phone" | "google" | "email">("phone");
+  const [authMode, setAuthMode] = useState<"signin" | "signup" | "recovery">("signin");
+  const [tab, setTab] = useState<"phone" | "google" | "email">("email");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [googleEmail, setGoogleEmail] = useState("");
@@ -39,8 +43,8 @@ export const AuthModal: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [successNotice, setSuccessNotice] = useState("");
-  const [devOtpCode, setDevOtpCode] = useState<string | null>(null);
   const [resendCooldown, setResendCooldown] = useState(0);
+  const [attemptsRemaining, setAttemptsRemaining] = useState<number | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -57,7 +61,7 @@ export const AuthModal: React.FC = () => {
       setSuccessNotice("");
       setOtpStep("input");
       setOtpCode("");
-      setDevOtpCode(null);
+      setAttemptsRemaining(null);
       setTimeout(() => inputRef.current?.focus(), 100);
       document.body.style.overflow = "hidden";
     } else {
@@ -97,7 +101,7 @@ export const AuthModal: React.FC = () => {
     e.preventDefault();
     setErrorMsg("");
     setSuccessNotice("");
-    setDevOtpCode(null);
+    setAttemptsRemaining(null);
 
     const target = currentTarget.trim();
     if (!target) {
@@ -113,36 +117,43 @@ export const AuthModal: React.FC = () => {
 
     setLoading(true);
 
+    const purposeLabel =
+      authMode === "signup"
+        ? "New Member Registration"
+        : authMode === "recovery"
+        ? "Account Access Recovery"
+        : "Member Sign In";
+
     if (tab === "google") {
-      // Dispatches OTP to Google email
       const res = await signInWithGoogle(target, undefined, userName);
       setLoading(false);
       if (res.success) {
-        setSuccessNotice(
-          res.message ||
-            `A one-time verification code has been dispatched from ${COMPANY_NOREPLY_EMAIL} to ${target}.`
-        );
-        if (res.devOtp) setDevOtpCode(res.devOtp);
+        setSuccessNotice("Verification code requested. Please check your email.");
         setOtpStep("verify");
-        setResendCooldown(30);
+        setResendCooldown(60);
       } else {
-        setErrorMsg(res.error || "Failed to dispatch Google verification code.");
+        if (res.cooldownRemaining) {
+          setResendCooldown(res.cooldownRemaining);
+        }
+        setErrorMsg(res.error || "Unable to send the verification code. Please try again.");
       }
     } else {
-      // Dispatches OTP to phone or standard email
       const res = await sendOtpCode(
         target,
         tab === "phone" ? "phone" : "email",
-        userName
+        userName,
+        purposeLabel
       );
       setLoading(false);
       if (res.success) {
-        setSuccessNotice(res.message);
-        if (res.devOtp) setDevOtpCode(res.devOtp);
+        setSuccessNotice("Verification code requested. Please check your email.");
         setOtpStep("verify");
-        setResendCooldown(30);
+        setResendCooldown(60);
       } else {
-        setErrorMsg(res.error || "Failed to dispatch verification code.");
+        if (res.cooldownRemaining) {
+          setResendCooldown(res.cooldownRemaining);
+        }
+        setErrorMsg(res.error || "Unable to send the verification code. Please try again.");
       }
     }
   };
@@ -171,6 +182,9 @@ export const AuthModal: React.FC = () => {
       setLoading(false);
       if (!res.success) {
         setErrorMsg(res.error || "Invalid verification code.");
+        if (res.attemptsRemaining !== undefined) {
+          setAttemptsRemaining(res.attemptsRemaining);
+        }
       }
     }
   };
@@ -196,20 +210,28 @@ export const AuthModal: React.FC = () => {
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#D9FF70]/10 rounded-full blur-[80px] pointer-events-none" />
 
         {/* Modal Header */}
-        <div className="flex items-start justify-between mb-6 relative z-10">
+        <div className="flex items-start justify-between mb-5 relative z-10">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7657FF]/20 border border-[#7657FF]/40 text-[#D9FF70] text-xs font-mono font-medium mb-3">
-              <Lock className="h-3.5 w-3.5 text-[#D9FF70]" />
-              <span>SECURITY OTP VERIFICATION</span>
+              <ShieldCheck className="h-3.5 w-3.5 text-[#D9FF70]" />
+              <span>EMAILJS PRODUCTION OTP SECURITY</span>
             </div>
             <h3
               id="auth-modal-title"
               className="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-tight"
             >
-              Sign In to Unlock Services
+              {authMode === "signup"
+                ? "Create Your Account"
+                : authMode === "recovery"
+                ? "Account Access Recovery"
+                : "Sign In to Unlock Services"}
             </h3>
             <p className="text-gray-400 text-xs sm:text-sm font-body mt-1">
-              Verify your mobile number or Google account with a one-time password (OTP).
+              {authMode === "signup"
+                ? "Register with your email to receive an instant OTP verification code."
+                : authMode === "recovery"
+                ? "Enter your email to verify ownership and instantly restore full access."
+                : "Verify your email or phone with a one-time password (OTP)."}
             </p>
           </div>
 
@@ -223,34 +245,95 @@ export const AuthModal: React.FC = () => {
           </button>
         </div>
 
-        {/* Official Sender Tag */}
-        <div className="mb-6 p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2.5 text-xs font-mono text-gray-300">
-          <span className="w-2 h-2 rounded-full bg-[#D9FF70] shrink-0" />
-          <span>
-            OTPs sent from company sender:{" "}
-            <strong className="text-white">{COMPANY_NOREPLY_EMAIL}</strong>
+        {/* Workflow Mode Selector (Sign In / Register / Recover) */}
+        {otpStep === "input" && (
+          <div className="grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-[#181A20] border border-[#2b2d3d] mb-5 text-xs font-mono">
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMode("signin");
+                setErrorMsg("");
+                setSuccessNotice("");
+              }}
+              className={cn(
+                "py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer",
+                authMode === "signin"
+                  ? "bg-[#7657FF] text-white font-bold shadow-sm"
+                  : "text-gray-400 hover:text-white"
+              )}
+            >
+              <LogIn className="h-3.5 w-3.5 shrink-0" />
+              <span>Sign In</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMode("signup");
+                setErrorMsg("");
+                setSuccessNotice("");
+              }}
+              className={cn(
+                "py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer",
+                authMode === "signup"
+                  ? "bg-[#7657FF] text-white font-bold shadow-sm"
+                  : "text-gray-400 hover:text-white"
+              )}
+            >
+              <UserPlus className="h-3.5 w-3.5 shrink-0" />
+              <span>Sign Up</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setAuthMode("recovery");
+                setErrorMsg("");
+                setSuccessNotice("");
+              }}
+              className={cn(
+                "py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 text-center cursor-pointer",
+                authMode === "recovery"
+                  ? "bg-[#7657FF] text-white font-bold shadow-sm"
+                  : "text-gray-400 hover:text-white"
+              )}
+            >
+              <KeyRound className="h-3.5 w-3.5 shrink-0" />
+              <span>Recovery</span>
+            </button>
+          </div>
+        )}
+
+        {/* Delivery Provider Badge */}
+        <div className="mb-5 p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between text-xs font-mono text-gray-300">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#D9FF70] shrink-0 animate-pulse" />
+            <span>
+              Delivery via <strong className="text-white">EmailJS Production API</strong>
+            </span>
+          </div>
+          <span className="text-[#D9FF70] text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-[#D9FF70]/10 border border-[#D9FF70]/30">
+            60s Cooldown
           </span>
         </div>
 
-        {/* Tab Selection */}
-        <div className="flex rounded-xl bg-[#181A20] p-1 border border-[#303139] mb-6">
+        {/* Channel Selection */}
+        <div className="flex rounded-xl bg-[#181A20] p-1 border border-[#303139] mb-5">
           <button
             type="button"
             onClick={() => {
-              setTab("phone");
+              setTab("email");
               setOtpStep("input");
               setErrorMsg("");
               setSuccessNotice("");
             }}
             className={cn(
-              "flex-1 py-2 px-3 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center gap-1.5",
-              tab === "phone"
+              "flex-1 py-2 px-3 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer",
+              tab === "email"
                 ? "bg-[#7657FF] text-white shadow-sm font-semibold"
                 : "text-gray-400 hover:text-white"
             )}
           >
-            <Phone className="h-3.5 w-3.5" />
-            <span>Mobile OTP</span>
+            <Mail className="h-3.5 w-3.5" />
+            <span>Email OTP</span>
           </button>
 
           <button
@@ -262,7 +345,7 @@ export const AuthModal: React.FC = () => {
               setSuccessNotice("");
             }}
             className={cn(
-              "flex-1 py-2 px-3 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center gap-1.5",
+              "flex-1 py-2 px-3 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer",
               tab === "google"
                 ? "bg-[#7657FF] text-white shadow-sm font-semibold"
                 : "text-gray-400 hover:text-white"
@@ -292,20 +375,20 @@ export const AuthModal: React.FC = () => {
           <button
             type="button"
             onClick={() => {
-              setTab("email");
+              setTab("phone");
               setOtpStep("input");
               setErrorMsg("");
               setSuccessNotice("");
             }}
             className={cn(
-              "flex-1 py-2 px-3 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center gap-1.5",
-              tab === "email"
+              "flex-1 py-2 px-3 rounded-lg text-xs font-mono font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer",
+              tab === "phone"
                 ? "bg-[#7657FF] text-white shadow-sm font-semibold"
                 : "text-gray-400 hover:text-white"
             )}
           >
-            <Mail className="h-3.5 w-3.5" />
-            <span>Email OTP</span>
+            <Phone className="h-3.5 w-3.5" />
+            <span>Mobile OTP</span>
           </button>
         </div>
 
@@ -313,36 +396,26 @@ export const AuthModal: React.FC = () => {
         {errorMsg && (
           <div className="mb-4 p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-mono flex items-start gap-2">
             <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-            <span>{errorMsg}</span>
-          </div>
-        )}
-
-        {/* Success / OTP Dev helper Banner */}
-        {devOtpCode && (
-          <div className="mb-4 p-3.5 rounded-xl bg-[#7657FF]/15 border border-[#7657FF]/40 text-[#D9FF70] text-xs font-mono space-y-1">
-            <div className="flex items-center justify-between">
-              <span className="font-bold flex items-center gap-1.5">
-                <CheckCircle2 className="h-4 w-4 text-[#D9FF70]" />
-                Security OTP Dispatched
-              </span>
-              <button
-                type="button"
-                onClick={() => setOtpCode(devOtpCode)}
-                className="underline hover:text-white cursor-pointer font-semibold"
-              >
-                Auto-fill Code
-              </button>
+            <div>
+              <span>{errorMsg}</span>
+              {attemptsRemaining !== null && attemptsRemaining > 0 && (
+                <span className="block mt-1 font-semibold text-amber-300">
+                  {attemptsRemaining} verification attempt{attemptsRemaining === 1 ? "" : "s"} remaining before code invalidation.
+                </span>
+              )}
             </div>
-            <p className="text-gray-300">
-              One-Time Password:{" "}
-              <strong className="text-white text-base tracking-widest">
-                {devOtpCode}
-              </strong>
-            </p>
           </div>
         )}
 
-        {/* STEP 1: INPUT FORM (Mobile Number, Google Email, or Work Email) */}
+        {/* Success / Status Banner */}
+        {successNotice && (
+          <div className="mb-4 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-mono flex items-start gap-2">
+            <CheckCircle2 className="h-4 w-4 shrink-0 mt-0.5 text-emerald-400" />
+            <span>{successNotice}</span>
+          </div>
+        )}
+
+        {/* STEP 1: INPUT FORM (Email, Google Account, or Mobile Number) */}
         {otpStep === "input" ? (
           <form onSubmit={handleSendOtp} className="space-y-4">
             <div>
@@ -351,7 +424,7 @@ export const AuthModal: React.FC = () => {
                   ? "Mobile Phone Number *"
                   : tab === "google"
                   ? "Google Account Email Address *"
-                  : "Work Email Address *"}
+                  : "Email Address *"}
               </label>
 
               <div className="relative">
@@ -411,51 +484,61 @@ export const AuthModal: React.FC = () => {
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-mono uppercase tracking-wider text-gray-300 font-semibold mb-2">
-                Your Full Name (Optional)
-              </label>
-              <input
-                type="text"
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                placeholder="e.g. Vikram Mehta"
-                className="w-full px-4 py-3 bg-[#181A20] border border-[#303139] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#7657FF] transition-colors"
-              />
-            </div>
+            {(authMode === "signup" || tab !== "phone") && (
+              <div>
+                <label className="block text-xs font-mono uppercase tracking-wider text-gray-300 font-semibold mb-2">
+                  Full Name {authMode === "signup" ? "*" : "(Optional)"}
+                </label>
+                <input
+                  type="text"
+                  required={authMode === "signup"}
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder="e.g. Vikram Mehta"
+                  className="w-full px-4 py-3 bg-[#181A20] border border-[#303139] rounded-xl text-white text-sm placeholder-gray-500 focus:outline-none focus:border-[#7657FF] transition-colors"
+                />
+              </div>
+            )}
 
             <p className="text-[11px] font-mono text-gray-400">
-              The system will dispatch your 6-digit verification code from{" "}
-              <strong className="text-gray-200">{COMPANY_NOREPLY_EMAIL}</strong>. You must enter this code to log in.
+              The verification code expires in <strong className="text-gray-200">10 minutes</strong>. A minimum 60-second cooldown is enforced between requests.
             </p>
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={loading || resendCooldown > 0}
               className="w-full py-3.5 px-6 rounded-full bg-[#7657FF] hover:bg-[#6242EC] text-white font-mono text-xs uppercase tracking-wider font-bold transition-all duration-200 flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(118,87,255,0.3)] disabled:opacity-50 cursor-pointer"
             >
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  <span>Dispatching OTP from Company Email...</span>
+                  <span>Dispatching OTP via EmailJS...</span>
                 </>
+              ) : resendCooldown > 0 ? (
+                <span>Cooldown active ({resendCooldown}s)</span>
               ) : (
                 <>
-                  <span>Send One-Time Password</span>
+                  <span>
+                    {authMode === "signup"
+                      ? "Register & Send Verification Code"
+                      : authMode === "recovery"
+                      ? "Send Recovery OTP Code"
+                      : "Send One-Time Password"}
+                  </span>
                   <ArrowRight className="h-4 w-4" />
                 </>
               )}
             </button>
           </form>
         ) : (
-          /* STEP 2: VERIFICATION OTP ENTRY FORM — MANDATORY FOR ALL USERS */
+          /* STEP 2: VERIFICATION OTP ENTRY FORM */
           <form onSubmit={handleVerifyOtp} className="space-y-4">
             <div className="p-3.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono flex items-center justify-between">
               <div>
                 <span className="text-gray-400 block text-[11px]">
-                  Verification code dispatched to:
+                  Verification code dispatched via EmailJS to:
                 </span>
-                <strong className="text-white text-sm">{currentTarget}</strong>
+                <strong className="text-white text-sm break-all">{currentTarget}</strong>
               </div>
               <button
                 type="button"
@@ -463,7 +546,7 @@ export const AuthModal: React.FC = () => {
                   setOtpStep("input");
                   setErrorMsg("");
                 }}
-                className="text-[#D9FF70] hover:underline font-semibold"
+                className="text-[#D9FF70] hover:underline font-semibold cursor-pointer shrink-0 ml-3"
               >
                 Change
               </button>
@@ -515,11 +598,17 @@ export const AuthModal: React.FC = () => {
               {loading ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin text-[#111318]" />
-                  <span>Verifying Security Code...</span>
+                  <span>Verifying Code...</span>
                 </>
               ) : (
                 <>
-                  <span>Verify OTP & Log In</span>
+                  <span>
+                    {authMode === "signup"
+                      ? "Verify & Complete Signup"
+                      : authMode === "recovery"
+                      ? "Verify & Restore Access"
+                      : "Verify OTP & Log In"}
+                  </span>
                   <ArrowRight className="h-4 w-4" />
                 </>
               )}
@@ -527,7 +616,7 @@ export const AuthModal: React.FC = () => {
           </form>
         )}
 
-        {/* WhatsApp Assistance Desk for New & Existing Users */}
+        {/* WhatsApp Assistance Desk */}
         <div className="mt-5 p-3 rounded-2xl bg-[#161821] border border-[#2b2d3d] flex items-center justify-between text-xs">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded-full bg-[#25D366]/20 flex items-center justify-center text-[#25D366] shrink-0">
@@ -557,9 +646,9 @@ export const AuthModal: React.FC = () => {
         <div className="mt-4 pt-3 border-t border-[#232533] flex items-center justify-between text-[11px] font-mono text-gray-400">
           <span className="flex items-center gap-1.5">
             <Lock className="h-3 w-3 text-[#D9FF70]" />
-            256-Bit TLS Security
+            TLS Encrypted
           </span>
-          <span>Digital Marketing with Sid</span>
+          <span>{brand.name}</span>
         </div>
       </div>
     </div>

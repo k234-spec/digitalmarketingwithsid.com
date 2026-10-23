@@ -8,9 +8,11 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test:services": "node scripts/test-services-module.mjs"
+    "test:services": "node scripts/test-services-module.mjs",
+    "test:otp": "npx tsx scripts/test-emailjs-otp.mjs"
   },
   "dependencies": {
+    "@emailjs/browser": "^5.0.3",
     "@hookform/resolvers": "^5.9.1",
     "@react-three/drei": "^10.0.3",
     "@react-three/fiber": "^9.1.0",
