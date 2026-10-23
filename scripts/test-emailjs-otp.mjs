@@ -59,7 +59,7 @@ async function runTests() {
     const config = getEmailJsConfig();
     assert(config.isConfigured, "EmailJS should be marked as configured");
     assert(config.serviceId === "service_8vyxkwe", `Expected service_8vyxkwe, got ${config.serviceId}`);
-    assert(config.templateId === "template_0navwiu", `Expected template_0navwiu, got ${config.templateId}`);
+    assert(config.templateId === "template_adhwgqm", `Expected template_adhwgqm, got ${config.templateId}`);
     assert(config.publicKey === "Tv6RmLe-U4J77h6j8", `Expected Tv6RmLe-U4J77h6j8, got ${config.publicKey}`);
   });
 

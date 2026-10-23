@@ -7,6 +7,8 @@ import { MotionProvider } from "@/components/motion/MotionProvider";
 import { constructMetadata, generateOrganizationSchema, generateWebSiteSchema } from "@/lib/seo";
 import { AuthProvider } from "@/components/auth/AuthContext";
 import { AuthModal } from "@/components/auth/AuthModal";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const inter = Inter({
@@ -76,6 +78,8 @@ export default function RootLayout({
             <AuthModal />
           </MotionProvider>
         </AuthProvider>
+        <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );

@@ -12,7 +12,7 @@ export const EMAILJS_PUBLIC_KEY =
 export const EMAILJS_SERVICE_ID =
   process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_8vyxkwe";
 export const EMAILJS_TEMPLATE_ID =
-  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_0navwiu";
+  process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_adhwgqm";
 
 let isInitialized = false;
 

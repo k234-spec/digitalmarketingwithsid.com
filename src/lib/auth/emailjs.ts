@@ -141,6 +141,19 @@ export async function sendOtpEmail({
       `[EmailJS Delivery Error] HTTP ${response.status}: ${errorText}`
     );
 
+    // Fall back to verified Resend domain if EmailJS template is not found or fails
+    const fallbackResult = await dispatchViaResendFallback({
+      toEmail,
+      otpCode,
+      purpose,
+      expiryMinutes,
+      recipientName,
+    });
+
+    if (fallbackResult?.success) {
+      return fallbackResult;
+    }
+
     return {
       success: false,
       error: "Unable to send the verification code. Please try again.",
@@ -149,9 +162,98 @@ export async function sendOtpEmail({
     const message =
       error instanceof Error ? error.message : "Network error contacting EmailJS";
     console.error(`[EmailJS Dispatch Exception]:`, message);
+
+    const fallbackResult = await dispatchViaResendFallback({
+      toEmail,
+      otpCode,
+      purpose,
+      expiryMinutes,
+      recipientName,
+    });
+
+    if (fallbackResult?.success) {
+      return fallbackResult;
+    }
+
     return {
       success: false,
       error: "Unable to send the verification code. Please try again.",
     };
   }
+}
+
+/**
+ * Fallback dispatcher using Resend with custom verified domain.
+ * Ensures OTPs are reliably delivered even if EmailJS template ID is not yet published.
+ */
+async function dispatchViaResendFallback({
+  toEmail,
+  otpCode,
+  purpose = "Account Verification & Secure Access",
+  expiryMinutes = 10,
+  recipientName,
+}: SendOtpEmailParams): Promise<EmailJsResult | null> {
+  const apiKey = process.env.EMAIL_PROVIDER_API_KEY;
+  if (!apiKey || !apiKey.startsWith("re_")) {
+    return null;
+  }
+
+  const name = recipientName?.trim() || toEmail.split("@")[0];
+
+  try {
+    const fromAddress =
+      "Digital Marketing with Sid <noreply@digitalmarketingwithsid.com>";
+
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: fromAddress,
+        to: [toEmail],
+        subject: `Your Verification Code: ${otpCode} — Digital Marketing with Sid`,
+        html: `
+          <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 540px; margin: 0 auto; padding: 32px 24px; background: #0b0c10; color: #ffffff; border-radius: 16px; border: 1px solid #1f232d;">
+            <div style="margin-bottom: 24px;">
+              <h1 style="color: #ffffff; font-size: 20px; font-weight: 700; margin: 0 0 6px 0; letter-spacing: -0.5px;">Digital Marketing with Sid</h1>
+              <p style="color: #9ca3af; font-size: 13px; margin: 0;">${purpose}</p>
+            </div>
+            <div style="background: #141721; border: 1px solid #282d3c; border-radius: 12px; padding: 24px; text-align: center; margin: 24px 0;">
+              <p style="color: #9ca3af; font-size: 11px; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 12px 0; font-family: monospace;">One-Time Security Passcode</p>
+              <div style="font-size: 38px; font-weight: 800; letter-spacing: 10px; color: #D9FF70; font-family: monospace; line-height: 1;">${otpCode}</div>
+              <p style="color: #6b7280; font-size: 12px; margin: 14px 0 0 0; font-family: monospace;">Expires in ${expiryMinutes} minutes • Single use only</p>
+            </div>
+            <p style="color: #d1d5db; font-size: 14px; line-height: 1.6; margin: 0 0 16px 0;">
+              Hello ${name}, please enter this verification code on the site to authenticate your account.
+            </p>
+            <p style="color: #6b7280; font-size: 12px; line-height: 1.5; margin: 0 0 20px 0;">
+              If you did not request this verification code, please ignore this email or reach out to our team.
+            </p>
+            <div style="border-top: 1px solid #1f232d; padding-top: 16px; margin-top: 24px; font-size: 11px; color: #6b7280; font-family: monospace;">
+              TLS Encrypted • Digital Marketing with Sid • Delhi, India
+            </div>
+          </div>
+        `,
+      }),
+    });
+
+    if (res.ok) {
+      console.log(
+        `[Resend Delivery Success] Verification email successfully delivered to ${toEmail}.`
+      );
+      return {
+        success: true,
+        message: "Verification code requested. Please check your email.",
+      };
+    }
+
+    const errData = await res.text();
+    console.warn(`[Resend Fallback Warning] HTTP ${res.status}: ${errData}`);
+  } catch (err: unknown) {
+    console.error("[Resend Fallback Exception]:", err);
+  }
+
+  return null;
 }
