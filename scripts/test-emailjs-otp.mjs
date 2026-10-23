@@ -60,7 +60,7 @@ async function runTests() {
     assert(config.isConfigured, "EmailJS should be marked as configured");
     assert(config.serviceId === "service_8vyxkwe", `Expected service_8vyxkwe, got ${config.serviceId}`);
     assert(config.templateId === "template_adhwgqm", `Expected template_adhwgqm, got ${config.templateId}`);
-    assert(config.publicKey === "Tv6RmLe-U4J77h6j8", `Expected Tv6RmLe-U4J77h6j8, got ${config.publicKey}`);
+    assert(config.publicKey === "taDVnlUH3gCIHqqWN", `Expected taDVnlUH3gCIHqqWN, got ${config.publicKey}`);
   });
 
   // 2. Test EmailJS API Dispatch

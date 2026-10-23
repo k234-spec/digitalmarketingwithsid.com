@@ -8,7 +8,7 @@ import emailjs from "@emailjs/browser";
  */
 
 export const EMAILJS_PUBLIC_KEY =
-  process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "Tv6RmLe-U4J77h6j8";
+  process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "taDVnlUH3gCIHqqWN";
 export const EMAILJS_SERVICE_ID =
   process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_8vyxkwe";
 export const EMAILJS_TEMPLATE_ID =
