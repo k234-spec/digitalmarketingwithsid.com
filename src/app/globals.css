@@ -136,23 +136,33 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Smooth Infinite Marquee */
-@keyframes marquee {
+/* Continuous Seamless Rotating Marquee */
+@keyframes continuousScroll {
   0% {
-    transform: translateX(0%);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
-.animate-marquee {
+.marquee-container {
   display: flex;
-  animation: marquee 35s linear infinite;
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(to right, transparent 0%, black 40px, black calc(100% - 40px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40px, black calc(100% - 40px), transparent 100%);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  flex-shrink: 0;
+  animation: continuousScroll 28s linear infinite;
   will-change: transform;
 }
 
-.marquee-group:hover .animate-marquee {
+.marquee-track:hover {
   animation-play-state: paused;
 }
 
@@ -172,20 +182,16 @@
   animation: fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Intentional reduced motion: disable disorienting transforms and motion while preserving feedback */
+/* Accessible reduced motion: slow down ambient animation without breaking user-facing visual loops */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
   }
 
-  *, ::before, ::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transform: none !important;
+  .marquee-track {
+    animation-duration: 60s !important;
   }
 
-  /* Retain gentle state transitions (color, background, border, opacity) for clear interactive feedback */
   a, button, input, textarea, select, [role="button"], [role="dialog"] {
     transition-duration: 150ms !important;
     transition-property: color, background-color, border-color, opacity, box-shadow !important;
