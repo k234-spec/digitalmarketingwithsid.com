@@ -9,6 +9,8 @@ export interface BrandConfig {
   whatsappNumber: string;
   alternatePhone: string;
   alternateWhatsappNumber: string;
+  inquiryPhone: string;
+  inquiryWhatsappNumber: string;
   location: string;
   markets: string[];
   operatingHours: string;
@@ -27,6 +29,8 @@ export const brand: BrandConfig = {
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "918447886310",
   alternatePhone: "+91 78271 69606",
   alternateWhatsappNumber: process.env.NEXT_PUBLIC_ALT_WHATSAPP_NUMBER || "917827169606",
+  inquiryPhone: "+91 78271 69606",
+  inquiryWhatsappNumber: process.env.NEXT_PUBLIC_INQUIRY_WHATSAPP_NUMBER || "917827169606",
   location: "Remote Location",
   markets: ["India", "United States", "United Kingdom", "UAE", "Singapore"],
   operatingHours: "Monday – Friday: 9:30 AM – 6:30 PM IST",

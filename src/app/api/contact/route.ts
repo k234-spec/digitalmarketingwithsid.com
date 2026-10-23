@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { contactFormSchema } from "@/lib/validations";
 import { sendInquiryNotification } from "@/lib/mailer";
+import { getInquiryWhatsAppUrl } from "@/lib/whatsapp";
 
 // In-memory rate limiting map for basic abuse prevention
 const rateLimitMap = new Map<string, { count: number; expiresAt: number }>();
@@ -99,12 +100,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const whatsappUrl = getInquiryWhatsAppUrl(
+      validatedData,
+      mailerResult.messageId
+    );
+
     return NextResponse.json(
       {
         success: true,
         message: "Inquiry successfully processed.",
         submissionId: mailerResult.messageId,
         mode: mailerResult.mode,
+        whatsappUrl,
       },
       { status: 200 }
     );
