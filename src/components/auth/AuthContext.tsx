@@ -83,8 +83,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     refreshUser();
   }, [refreshUser]);
 
-  const openLoginModal = (tab: "phone" | "google" | "email" = "phone") => {
-    setActiveAuthTab(tab);
+  const openLoginModal = (tab: "google" | "phone" | "email" = "google") => {
+    setActiveAuthTab("google");
     setIsAuthModalOpen(true);
   };
 

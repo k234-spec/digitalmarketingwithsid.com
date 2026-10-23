@@ -137,7 +137,7 @@ export const Navbar: React.FC = () => {
                           if (!isAccessible) {
                             e.preventDefault();
                             setServicesDropdownOpen(false);
-                            openLoginModal("phone");
+                            openLoginModal("google");
                           }
                         }}
                         className={cn(
@@ -230,7 +230,7 @@ export const Navbar: React.FC = () => {
             ) : (
               <button
                 type="button"
-                onClick={() => openLoginModal("phone")}
+                onClick={() => openLoginModal("google")}
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider font-semibold text-[#17181C] hover:text-[#7657FF] border border-[#E5E4E0] hover:border-[#7657FF] transition-colors cursor-pointer"
               >
                 <LogIn className="h-3.5 w-3.5 text-[#7657FF]" />
@@ -261,7 +261,7 @@ export const Navbar: React.FC = () => {
             ) : (
               <button
                 type="button"
-                onClick={() => openLoginModal("phone")}
+                onClick={() => openLoginModal("google")}
                 className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-mono font-semibold text-[#7657FF] bg-[#7657FF]/10 border border-[#7657FF]/20"
               >
                 <LogIn className="h-3.5 w-3.5" />
@@ -339,7 +339,7 @@ export const Navbar: React.FC = () => {
                           if (!isAccessible) {
                             e.preventDefault();
                             setMobileMenuOpen(false);
-                            openLoginModal("phone");
+                            openLoginModal("google");
                           }
                         }}
                         className={cn(
@@ -426,7 +426,7 @@ export const Navbar: React.FC = () => {
                 type="button"
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  openLoginModal("phone");
+                  openLoginModal("google");
                 }}
                 className="w-full py-3 px-4 rounded-full bg-[#111318] hover:bg-[#1F2128] text-white font-mono text-xs uppercase tracking-wider font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               >
