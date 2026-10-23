@@ -16,25 +16,25 @@ colors:
   text-muted: "#8E9199"
 typography:
   display:
-    fontFamily: "Space Grotesk, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontFamily: "'New York Extra Large', 'New York', -apple-system-ui-serif, ui-serif, Georgia, serif"
     fontSize: "clamp(2rem, 5vw, 3.5rem)"
     fontWeight: 700
     lineHeight: 1.1
     letterSpacing: "-0.03em"
   headline:
-    fontFamily: "Space Grotesk, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontFamily: "'New York Extra Large', 'New York', -apple-system-ui-serif, ui-serif, Georgia, serif"
     fontSize: "clamp(1.5rem, 3vw, 2.25rem)"
     fontWeight: 700
     lineHeight: 1.2
     letterSpacing: "-0.02em"
   title:
-    fontFamily: "Space Grotesk, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontFamily: "'New York Extra Large', 'New York', -apple-system-ui-serif, ui-serif, Georgia, serif"
     fontSize: "1.25rem"
     fontWeight: 600
     lineHeight: 1.3
     letterSpacing: "-0.01em"
   body:
-    fontFamily: "Manrope, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontFamily: "'New York Extra Large', 'New York Medium', 'New York', -apple-system-ui-serif, ui-serif, Georgia, serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.65

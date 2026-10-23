@@ -62,7 +62,7 @@ CONTACT_EMAIL=info@digitalmarketingwithsid.com
 EMAIL_PROVIDER_API_KEY=
 
 # Agency WhatsApp number in international format (without '+' or spaces)
-WHATSAPP_NUMBER=918447886310
+WHATSAPP_NUMBER=919355205922
 
 # Optional Web Analytics ID (e.g. Google Analytics / Plausible)
 ANALYTICS_ID=

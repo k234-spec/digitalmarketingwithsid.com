@@ -52,6 +52,11 @@ export default function RootLayout({
       className={`${inter.variable} ${ibmPlexMono.variable}`}
     >
       <head>
+        <link rel="preconnect" href="https://fonts.cdnfonts.com" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.cdnfonts.com/css/new-york-extra-large"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}

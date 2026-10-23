@@ -14,9 +14,11 @@
   --color-border: #E5E4E0;
   --color-dark-border: #303139;
 
-  --font-display: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-body: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-sans: var(--font-sans), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-new-york: 'New York Extra Large', 'New York Medium', 'New York', -apple-system-ui-serif, ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-display: var(--font-new-york);
+  --font-body: var(--font-new-york);
+  --font-sans: var(--font-new-york);
+  --font-serif: var(--font-new-york);
   --font-mono: var(--font-ibm-plex-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
@@ -49,6 +51,7 @@
     min-height: 100vh;
     background-color: var(--bg-base);
     color: var(--text-primary);
+    font-family: var(--font-body);
   }
 
   ::selection {
@@ -73,6 +76,10 @@
 
 .font-sans {
   font-family: var(--font-sans);
+}
+
+.font-serif {
+  font-family: var(--font-serif);
 }
 
 .font-mono {
