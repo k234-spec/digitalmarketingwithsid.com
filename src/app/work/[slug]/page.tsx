@@ -6,6 +6,7 @@ import { projectsData } from "@/data/projects";
 import { Container } from "@/ui/Container";
 import { Button } from "@/ui/Button";
 import { Reveal } from "@/motion/Reveal";
+import { Counter } from "@/components/motion/Counter";
 import { constructMetadata } from "@/lib/seo";
 import {
   Clock,
@@ -121,7 +122,7 @@ export default async function CaseStudyDetailPage({ params }: CaseStudyPageProps
               <Reveal key={metric.label} delay={idx * 100}>
                 <div className="rounded-2xl bg-white border border-[#E5E4E0] p-6 space-y-2 shadow-sm">
                   <div className="font-display text-3xl sm:text-4xl font-extrabold text-[#7657FF]">
-                    {metric.value}
+                    <Counter value={metric.value} />
                   </div>
                   <div className="font-display font-bold text-base text-[#17181C]">
                     {metric.label}

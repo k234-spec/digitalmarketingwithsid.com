@@ -4,6 +4,7 @@ import { projectsData } from "@/data/projects";
 import { Container } from "@/ui/Container";
 import { Button } from "@/ui/Button";
 import { Reveal } from "@/motion/Reveal";
+import { Counter } from "@/components/motion/Counter";
 import { ArrowRight, Clock, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 export const CaseStudies: React.FC = () => {
@@ -128,7 +129,7 @@ export const CaseStudies: React.FC = () => {
                               {metric.label}
                             </span>
                             <span className="font-display text-2xl font-bold text-[#7657FF]">
-                              {metric.value}
+                              <Counter value={metric.value} />
                             </span>
                           </div>
                           <p className="text-xs text-[#686B73] font-mono leading-normal">

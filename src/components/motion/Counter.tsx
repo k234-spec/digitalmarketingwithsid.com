@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 interface CounterProps {
-  value: number;
+  value: number | string;
   duration?: number;
   prefix?: string;
   suffix?: string;
@@ -13,19 +13,42 @@ interface CounterProps {
 
 export const Counter: React.FC<CounterProps> = ({
   value,
-  duration = 1800,
-  prefix = "",
-  suffix = "",
-  decimals = 0,
+  duration = 1600,
+  prefix: propPrefix,
+  suffix: propSuffix,
+  decimals: propDecimals,
   className,
 }) => {
+  let targetNum = typeof value === "number" ? value : 0;
+  let prefix = propPrefix || "";
+  let suffix = propSuffix || "";
+  let decimals = propDecimals !== undefined ? propDecimals : 0;
+  let isParsable = true;
+
+  if (typeof value === "string") {
+    // Matches prefix (e.g., "+", "~", "$"), number (e.g., "1.1", "38", "99"), and suffix (e.g., "s", "%", "/100", " / 10")
+    const match = value.match(/^([^0-9.]*)([0-9]+(?:\.[0-9]+)?)(.*)$/);
+    if (match) {
+      prefix = propPrefix !== undefined ? propPrefix : match[1];
+      targetNum = parseFloat(match[2]);
+      suffix = propSuffix !== undefined ? propSuffix : match[3];
+      if (propDecimals === undefined) {
+        decimals = match[2].includes(".") ? match[2].split(".")[1].length : 0;
+      }
+    } else {
+      isParsable = false;
+    }
+  }
+
   const [current, setCurrent] = useState(0);
   const elementRef = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
 
   useEffect(() => {
+    if (!isParsable) return;
+
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setCurrent(value);
+      setCurrent(targetNum);
       return;
     }
 
@@ -38,14 +61,14 @@ export const Counter: React.FC<CounterProps> = ({
           const step = (timestamp: number) => {
             if (!startTime) startTime = timestamp;
             const progress = Math.min((timestamp - startTime) / duration, 1);
-            // Ease out quart
-            const easeProgress = 1 - Math.pow(1 - progress, 4);
-            setCurrent(easeProgress * value);
+            // Ease out cubic: 1 - (1 - progress)^3 for natural deceleration
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            setCurrent(easeProgress * targetNum);
 
             if (progress < 1) {
               requestAnimationFrame(step);
             } else {
-              setCurrent(value);
+              setCurrent(targetNum);
             }
           };
 
@@ -53,7 +76,7 @@ export const Counter: React.FC<CounterProps> = ({
           observer.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.15 }
     );
 
     if (elementRef.current) {
@@ -61,7 +84,11 @@ export const Counter: React.FC<CounterProps> = ({
     }
 
     return () => observer.disconnect();
-  }, [value, duration]);
+  }, [targetNum, duration, isParsable]);
+
+  if (!isParsable && typeof value === "string") {
+    return <span className={className}>{value}</span>;
+  }
 
   return (
     <span ref={elementRef} className={className}>
@@ -71,3 +98,4 @@ export const Counter: React.FC<CounterProps> = ({
     </span>
   );
 };
+
